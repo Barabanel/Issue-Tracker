@@ -1,5 +1,6 @@
 document.getElementById('issueInputForm').addEventListener('submit', saveIssue);
-document.onload = fetchIssues(); // to load issues from localStorage on load
+document.onload = fetchIssues();
+document.onload = fetchComments(); // to load issues from localStorage on load
 document.getElementById('issuesList').addEventListener('click', function(e){
     if(e.target && e.target.classList.contains('closed')){
     	var dataId = e.target.getAttribute('data-issueId');
@@ -48,7 +49,7 @@ function saveIssue(e) {
 	document.getElementById('issueInputForm').reset();
 
 	fetchIssues();
-
+	fetchComments();
 	e.preventDefault();
 }
 
@@ -148,11 +149,9 @@ function fetchComments() {
 	issues.forEach(function(issue, index) {
 		commentContainers[index].innerHTML = "";
 		var comments = issues[index].comments;
-
 		for(var i = 0; i < comments.length; i++) {
 			commentContainers[index].innerHTML += '<p class="text-white bg-secondary rounded-top p-2 mb-2 shadow-sm">'
 													+ comments[i].assignedTo + ' | ' + comments[i].text + '</p>';
 		}
-	})
-
+	});
 }
